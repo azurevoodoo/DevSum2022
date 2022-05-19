@@ -77,7 +77,10 @@ Task("Package")
 Task("Publish")
     .IsDependentOn("Package")
     .Does<BuildData>(async (context,data)=>{
-        await GitHubActions.Commands.UploadArtifact(data.ArtifactsPath, "NuGet");
+        await GitHubActions.Commands.UploadArtifact(
+            data.ArtifactsPath,
+            $"NuGet{Context.Environment.Platform.Family}"
+            );
     });
 
 
